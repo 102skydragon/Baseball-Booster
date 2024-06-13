@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baseball Player Stats</title>
+    <link href="default.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<body>
+    <div id="header" class="container">
+        <div id="logo">
+            <h1><a href="#">Baseball Boster</a></h1>
+        </div>
+        <div id="menu">
+            <ul>
+                <li class="active"><a href="index.html" accesskey="1" title="">HOME</a></li>
+                <li><a href="#" accesskey="2" title="">Predict game</a></li>
+                <li><a href="#" accesskey="3" title="" onclick="openModal()">Player Info</a></li>
+                <li><a href="#" accesskey="4" title="">Compare Player</a></li>
+                <li><a href="Log In.html" accesskey="5" title="">Log In</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="chart-container" id="players-container">
+        <div class="chart-wrapper" id="player-chart">
+            <!-- Player chart will be inserted here dynamically -->
+        </div>
+        <div class="chart-wrapper" id="stats-chart">
+            <!-- Stats chart will be inserted here dynamically -->
+        </div>
+    </div>
+
+    <div class="overlay" id="modal8">
+        <!-- Modal Content -->
+        <div class="modal-content">
+            <span class="close" onclick="closePop('modal8')">&times;</span>
+            <h2 style="text-align: center; color: black; padding-bottom: 10px;">선수 검색</h2>
+            <form onsubmit="submitForm(event)">
+                <div style="text-align: center;">
+                    <label for="team-select" style="color: black;">팀 이름 : </label>
+                    <select id="team-select" name="team-select" onchange="updatePlayerOptions()" class="border rounded px-2 py-1" style="color: black;">
+                        <option value="">팀을 선택하세요</option>
+                        <option value="LG">LG</option>
+                        <option value="KT">KT</option>
+                        <option value="SSG">SSG</option>
+                        <option value="NC">NC</option>
+                        <option value="두산">두산</option>
+                        <option value="KIA">KIA</option>
+                        <option value="롯데">롯데</option>
+                        <option value="삼성">삼성</option>
+                        <option value="한화">한화</option>
+                        <option value="키움">키움</option>
+                    </select>
+                </div>
+                <div style="text-align: center; margin-top: 10px;">
+                    <label for="player-select" style="color: black;">선수 이름 : </label>
+                    <select id="player-select" name="player-select" class="border rounded px-2 py-1" style="color: black;">
+                        <option value="" style="color: black;">선수를 선택하세요</option>
+                    </select>
+                </div>
+                <div style="text-align: center; margin-top: 10px;">
+                    <button type="submit" class="bg-blue-500 text-white rounded px-4 py-2">검색</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let players = {};
+    
+        function openModal() {
+            const modal = document.getElementById('modal8');
+            modal.style.display = 'block';
+            // 현재 선택된 팀과 선수 초기화
+            document.getElementById('team-select').value = '';
+            document.getElementById('player-select').innerHTML = '<option value="">선수를 선택하세요</option>';
+        }
+
+    
+        function closePop(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+    
+        function submitForm(event) {
+            event.preventDefault();
+            const playerSelect = document.getElementById('player-select');
+            const selectedPlayerID = playerSelect.value;
+            if (selectedPlayerID) {
+                window.location.href = `player.html?player_ID=${selectedPlayerID}`;
+            }
+        }
+    
+        function updatePlayerOptions() {
+            const teamSelect = document.getElementById('team-select');
+            const playerSelect = document.getElementById('player-select');
+            const selectedTeam = teamSelect.value;
+    
+            // Clear current player options
+            playerSelect.innerHTML = '';
+    
+            if (players[selectedTeam]) {
+                players[selectedTeam].forEach(function(player) {
+                    const option = document.createElement('option');
+                    option.value = player.player_ID;
+                    option.text = `${player.name} (${player.player_ID})`;
+                    playerSelect.add(option);
+                });
+            }
+        }
+    
+        function parseCSV(contents) {
+            const headers = [
+                'name', 'player_ID', 'season', 'year', 'team', 'age', 'position', 'oWAR', 'dWAR', 'G', 'PA', 'ePA', 'AB', 'R', 'H', '2B', '3B', 'HR', 'TB', 'RBI', 'SB', 'CS', 'BB', 'HP', 'IB', 'SO', 'GDP', 'SH', 'SF', 'AVG', 'OBP', 'SLG', 'OPS', 'R/ePA', 'wRC_plus', 'WAR'
+            ];
+            const lines = contents.trim().split('\n');
+            return lines.map(line => {
+                const values = line.split(',');
+                const player = {};
+                headers.forEach((header, index) => {
+                    player[header] = values[index];
+                });
+                return player;
+            });
+        }
+    
+        function parsePlayerStatsCSV(contents) {
+            const headers = [
+                'player_id', 'WAR%', 'wRC_plus%', 'OPS%', 'wOBA%', '공격WAA%', 'WAA%', 'IsoP%', 'IsoD%', 'BABIP%', '공격WAR%', 'wRC%', 'WPA', 'spAVG%', 'P/PA', 'AVG%', 'OBP%', 'SLG%', '종합RAA%', '공격RAA%', '수비RAA%', '타격RAA%', '주루RAA%', '필딩RAA%', 'HR%', 'RBI%'
+            ];
+            const lines = contents.trim().split('\n');
+            return lines.slice(1).map(line => {
+                const values = line.split(',');
+                const playerStats = {};
+                headers.forEach((header, index) => {
+                    if (header !== 'player_id') { // player_id는 제외
+                        playerStats[header] = values[index] ? parseInt(values[index]) : null;
+                    }
+                });
+                playerStats.player_id = values[0]; // player_id를 추가
+                return playerStats;
+            });
+        }
+    
+        function getPlayerDataById(playerData, playerId) {
+            return playerData.find(player => player.player_ID === playerId);
+        }
+    
+        function createPlayerChart(player) {
+            const abilities = calculateAbilities(player);
+    
+            // Player chart
+            const playerChartWrapper = document.getElementById('player-chart');
+            playerChartWrapper.innerHTML = `
+                <div class="player-info">
+                    <img class="player-photo" src="https://statiz.sporki.com/data/baseball/player/2023/${player.player_ID}.png" alt="Player Photo">
+                </div>
+                <div class="player-data">
+                    <div class="p_info">
+                        <div class="name">${player.name}</div>
+                        <div class="con">
+                            <span>${player.team}</span>
+                            <span>${player.position}</span>
+                            <span>나이: ${player.age}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="abilities">
+                    ${Object.keys(abilities).map(ability => `
+                        <div class="ability">${ability}</div>
+                        <div class="ability-bar ${getAbilityColor(abilities[ability])}" data-value="${abilities[ability]}"></div>
+                    `).join('')}
+                </div>
+            `;
+    
+            // Animate the ability bars
+            setTimeout(() => {
+                document.querySelectorAll('.ability-bar').forEach(bar => {
+                    bar.style.width = bar.getAttribute('data-value') + '%';
+                });
+            }, 100);
+    
+            // Stats chart
+            const statsChartWrapper = document.getElementById('stats-chart');
+            let percentileHTML = '';
+    
+            if (player.percentileRankings && typeof player.percentileRankings === 'object') {
+                for (const [key, value] of Object.entries(player.percentileRankings)) {
+                    if (value !== null && !isNaN(value) && key !== 'player_id') { // null 값 또는 NaN 값을 가지는 항목은 제외
+                        percentileHTML += `
+                            <div class="percentile-item">
+                                <p>${key}%</p>
+                                <div class="bar-container">
+                                    <div class="bar" data-value="${value}" style="width: ${value}%; background-color: ${getChartColor(value)};"></div>
+                                    <span class="value-label" style="left: calc(${value}% - 12px); background-color: ${getChartColor(value)};">${value}</span>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+            } else {
+                console.error('Invalid percentileRankings:', player.percentileRankings);
+            }
+    
+            statsChartWrapper.innerHTML = `
+                <div class="percentile-chart">
+                    <div class="w-full text-center font-bold text-xl mb-4">2024 KBO Percentile Rankings</div>
+                    ${percentileHTML}
+                    <div class="w-full text-center text-xs mt-4">
+                        <span class="inline-block w-3 h-3 bg-blue-500 rounded-full mr-2"></span><span style="color: black;">Poor</span>
+                        <span class="inline-block w-3 h-3 bg-gray-500 rounded-full mx-2"></span><span style="color: black;">Avg</span>
+                        <span class="inline-block w-3 h-3 bg-red-500 rounded-full ml-2"></span><span style="color: black;"> Great</span>
+                    </div>
+                </div>
+            `;
+        }
+    
+        function calculateAbilities(player) {
+            const avgAvg = 0.275; // 평균 타율
+            const avgSLG = 0.411; // 평균 장타율
+            const avgBBRate = 0.095; // 평균 볼넷 비율
+    
+            return {
+                Batting: Math.min(Math.floor((player.AVG / avgAvg) * 90), 100),
+                Power: Math.min(Math.floor((player.SLG / avgSLG) * 90), 100),
+                Baserunning: Math.max(player.SB * 5, 1),
+                PlateDiscipline: Math.min((player.BB / player.PA) / avgBBRate * 90, 100),
+                Fielding: Math.max(Math.min((player.dWAR + 1) * 50, 100), 0)
+            };
+        }
+    
+        function getAbilityColor(value) {
+            if (value >= 90) return 'red';
+            if (value >= 75) return 'orange';
+            if (value >= 60) return 'yellow';
+            if (value >= 45) return 'light-blue';
+            if (value >= 30) return 'sky-blue';
+            if (value >= 15) return 'blue';
+            return 'navy-blue';
+        }
+    
+        function getChartColor(value) {
+            if (value >= 90) return '#FF0A0A'; // Red for top performance
+            if (value >= 80) return '#FF5252'; // Light Red
+            if (value >= 70) return '#FF8585'; // Pinkish Red
+            if (value >= 60) return '#FFB2B2'; // Lighter Pink
+            if (value >= 50) return '#FFD6D6'; // Very Light Pink
+            if (value >= 40) return '#FFC595'; // Yellow for average performance
+            if (value >= 30) return '#89CFF0'; // blue
+            if (value >= 20) return '#56A0D3'; // 
+            if (value >= 10) return '#0072BB'; // Light Greenish Blue
+            return '#00008B'; // Blue for low performance
+        }
+    
+        // Main function to fetch CSV data and display player info
+        window.onload = async function() {
+    try {
+        const response1 = await fetch('batter.csv');
+        const batterData = await response1.text();
+        const playerData = parseCSV(batterData);
+        playerData.forEach(player => {
+            if (!players[player.team]) {
+                players[player.team] = [];
+            }
+            players[player.team].push(player);
+        });
+
+        const playerId = new URLSearchParams(window.location.search).get('player_ID');
+        if (!playerId) {
+            console.error('Player ID not found in URL');
+            return;
+        }
+
+        console.log('Player ID:', playerId);
+
+        const response2 = await fetch('player_stats.csv');
+        const statsData = await response2.text();
+        const playerStats = parsePlayerStatsCSV(statsData);
+
+        console.log('Player Stats:', playerStats);
+
+        const player = getPlayerDataById(playerData, playerId);
+        const stats = playerStats.find(stat => stat.player_id === playerId);
+
+        console.log('Player Data:', player);
+        console.log('Stats Data:', stats);
+
+        if (player && stats) {
+            player.percentileRankings = stats;
+            createPlayerChart(player);
+        } else {
+            console.error('Player not found');
+        }
+    } catch (error) {
+        console.error('Error fetching the CSV files:', error);
+    }
+};
+
+
+    </script>
+    
+</body>
+
+</html>
