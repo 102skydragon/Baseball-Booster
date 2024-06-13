@@ -5,6 +5,9 @@ on:
     branches:
       - main  # main 브랜치에 push될 때마다 실행
 
+permissions:
+  contents: write  # 이 줄을 추가하여 권한 부여
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
