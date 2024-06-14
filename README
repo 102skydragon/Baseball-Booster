@@ -2,5 +2,15 @@
 인공지능을 이용한 야구 승부 예측
 선수들의 능력치 비교
 
-사용법 : 우측 상단의 PLAYER INFO를 누르고 자신이 원하는 선수를 선택하면 그 선수의 능력과 기록이 나온다.
+우측 상단의 predict game, player info 에서 선수들 능력과 AI 승률 예측 결과 샘플을 확인 할 수 있다.
 
+prdict game : 테스트 해본 5개의 게임을 html 로 나타냈다.
+
+player info 선수 능력에 따른 5개의 능력
+	batting(컨택능력 + 강한 타구를 만들어 내는 능력), 
+	Power(장타력, 힘)
+	Baserunning(달리기 능력)
+	PlateDiscipline(선구안, 공을 구분하는 능력)
+	Fielding(수비 능력)
+
+을 확인 할 수 있고, 선수의 세부 지표도 확인 할 수 있다.
