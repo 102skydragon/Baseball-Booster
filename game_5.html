@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baseball Player Stats</title>
+    <link href="default.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+
+    <style>
+        .main-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: black;
+        }
+
+        .team {
+            width: 30%;
+            text-align: center;
+        }
+
+        .team-logo {
+            display: block;
+            margin: 0 auto 20px;
+            width: 250px;
+            height: 250px;
+            object-fit: contain;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+        }
+
+        th,
+        td {
+            color: black;
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        td {
+            font-weight: bold;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: black;
+        }
+
+        .kt th {
+            background-color: #c8102e;
+            color: white;
+        }
+
+        .nc th {
+            background-color: #003366;
+            color: white;
+        }
+
+        .center {
+            width: 30%;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header" class="container">
+        <div id="logo">
+            <h1><a href="#">Baseball Boster</a></h1>
+        </div>
+    </div>
+    <div class="main-container">
+        <!-- KT 팀 -->
+        <div class="team">
+            <img src="images/kt.svg" alt="KT 위즈 로고" class="team-logo">
+            <h2>KT 위즈 라인업</h2>
+            <table class="kt">
+                <thead>
+                    <tr>
+                        <th>포지션</th>
+                        <th>선수</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1번 타자</td><td>로하스</td></tr>
+                    <tr><td>2번 타자</td><td>황재균</td></tr>
+                    <tr><td>3번 타자</td><td>강백호</td></tr>
+                    <tr><td>4번 타자</td><td>장성우</td></tr>
+                    <tr><td>5번 타자</td><td>오재일</td></tr>
+                    <tr><td>6번 타자</td><td>배정대</td></tr>
+                    <tr><td>7번 타자</td><td>오윤석</td></tr>
+                    <tr><td>8번 타자</td><td>조용호</td></tr>
+                    <tr><td>9번 타자</td><td>김상수</td></tr>
+                    <tr><td>선발 투수</td><td>엄상백</td></tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- AI 승부 예측 -->
+        <div class="center">
+            <div class="max-w-2xl mx-auto mt-8">
+                <h2 class="text-xl font-bold mb-4">AI 승부예측</h2>
+                <div class="mb-8">
+                    <h3 class="text-sm font-bold text-white-600 mb-1">학습 모델이 예상한 승패확률 <i class="fas fa-question-circle text-gray-400"></i></h3>
+                    <div class="flex items-center">
+                        <div class="bg-blue-600 text-white text-lg font-bold p-2 rounded-l-md" style="width: 58%;">58%</div>
+                        <div class="bg-gray-300 text-gray-600 text-lg font-bold p-2 rounded-r-md" style="width: 42%;">42%</div>
+                    </div>
+                    <div class="flex justify-between items-center mt-2">
+                        <div class="flex items-center">
+                            <img src="images/kt.svg" alt="KT" class="mr-2" width="20px" height="20px">
+                            <span class="text-sm font-bold text-white-700">KT</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-sm font-bold text-white-700">NC</span>
+                            <img src="images/nc.svg" alt="NC" class="ml-2" width="20px" height="20px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- NC 팀 -->
+        <div class="team">
+            <img src="images/nc.svg" alt="NC 다이노스 로고" class="team-logo">
+            <h2>NC 다이노스 라인업</h2>
+            <table class="nc">
+                <thead>
+                    <tr>
+                        <th>포지션</th>
+                        <th>선수</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1번 타자</td><td>박민우</td></tr>
+                    <tr><td>2번 타자</td><td>한석현</td></tr>
+                    <tr><td>3번 타자</td><td>박건우</td></tr>
+                    <tr><td>4번 타자</td><td>데이비슨</td></tr>
+                    <tr><td>5번 타자</td><td>손아섭</td></tr>
+                    <tr><td>6번 타자</td><td>서호철</td></tr>
+                    <tr><td>7번 타자</td><td>김휘집</td></tr>
+                    <tr><td>8번 타자</td><td>박세혁</td></tr>
+                    <tr><td>9번 타자</td><td>김주원</td></tr>
+                    <tr><td>선발 투수</td><td>임상현</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

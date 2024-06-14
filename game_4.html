@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baseball Player Stats</title>
+    <link href="default.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+
+    <style>
+        .main-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: black;
+        }
+
+        .team {
+            width: 30%;
+            text-align: center;
+        }
+
+        .team-logo {
+            display: block;
+            margin: 0 auto 20px;
+            width: 250px;
+            height: 250px;
+            object-fit: contain;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+        }
+
+        th,
+        td {
+            color: black;
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        td {
+            font-weight: bold;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: black;
+        }
+
+        .lg th {
+            background-color: #cc0033;
+            color: white;
+        }
+
+        .samsung th {
+            background-color: #0066cc;
+            color: white;
+        }
+
+        .center {
+            width: 30%;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header" class="container">
+        <div id="logo">
+            <h1><a href="#">Baseball Boster</a></h1>
+        </div>
+    </div>
+    <div class="main-container">
+        <!-- LG 팀 -->
+        <div class="team">
+            <img src="images/lg.svg" alt="LG 트윈스 로고" class="team-logo">
+            <h2>LG 트윈스 라인업</h2>
+            <table class="lg">
+                <thead>
+                    <tr>
+                        <th>포지션</th>
+                        <th>선수</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1번 타자</td><td>홍창기</td></tr>
+                    <tr><td>2번 타자</td><td>문성주</td></tr>
+                    <tr><td>3번 타자</td><td>김현수</td></tr>
+                    <tr><td>4번 타자</td><td>오스틴</td></tr>
+                    <tr><td>5번 타자</td><td>박동원</td></tr>
+                    <tr><td>6번 타자</td><td>문보경</td></tr>
+                    <tr><td>7번 타자</td><td>구본혁</td></tr>
+                    <tr><td>8번 타자</td><td>박해민</td></tr>
+                    <tr><td>9번 타자</td><td>신민재</td></tr>
+                    <tr><td>선발 투수</td><td>손주영</td></tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- AI 승부 예측 -->
+        <div class="center">
+            <div class="max-w-2xl mx-auto mt-8">
+                <h2 class="text-xl font-bold mb-4">AI 승부예측</h2>
+                <div class="mb-8">
+                    <h3 class="text-sm font-bold text-white-600 mb-1">학습 모델이 예상한 승패확률 <i class="fas fa-question-circle text-gray-400"></i></h3>
+                    <div class="flex items-center">
+                        <div class="bg-blue-600 text-white text-lg font-bold p-2 rounded-l-md" style="width: 41%;">41%</div>
+                        <div class="bg-gray-300 text-gray-600 text-lg font-bold p-2 rounded-r-md" style="width: 59%;">59%</div>
+                    </div>
+                    <div class="flex justify-between items-center mt-2">
+                        <div class="flex items-center">
+                            <img src="images/lg.svg" alt="LG" class="mr-2" width="20px" height="20px">
+                            <span class="text-sm font-bold text-white-700">LG</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-sm font-bold text-white-700">삼성</span>
+                            <img src="images/samsung.svg" alt="삼성" class="ml-2" width="20px" height="20px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 삼성 팀 -->
+        <div class="team">
+            <img src="images/samsung.svg" alt="삼성 라이온즈 로고" class="team-logo">
+            <h2>삼성 라이온즈 라인업</h2>
+            <table class="samsung">
+                <thead>
+                    <tr>
+                        <th>포지션</th>
+                        <th>선수</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1번 타자</td><td>이성규</td></tr>
+                    <tr><td>2번 타자</td><td>맥키넌</td></tr>
+                    <tr><td>3번 타자</td><td>구자욱</td></tr>
+                    <tr><td>4번 타자</td><td>박병호</td></tr>
+                    <tr><td>5번 타자</td><td>강민호</td></tr>
+                    <tr><td>6번 타자</td><td>김영웅</td></tr>
+                    <tr><td>7번 타자</td><td>전병우</td></tr>
+                    <tr><td>8번 타자</td><td>윤정빈</td></tr>
+                    <tr><td>9번 타자</td><td>안주형</td></tr>
+                    <tr><td>선발 투수</td><td>이승민</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>
