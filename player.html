@@ -220,14 +220,18 @@
         function calculateAbilities(player) {
             const avgAvg = 0.275; // 평균 타율
             const avgSLG = 0.411; // 평균 장타율
+            const avgOBP = 0.340; // 평균 출루율
             const avgBBRate = 0.095; // 평균 볼넷 비율
-    
+            const avgHR = 5; // 평균 홈런 수
+
+            const speedScore = (player.SB * 20 / (player.CS + 2)) + (player.R / player.G) * 1.5;
+
             return {
-                Batting: Math.min(Math.floor((player.AVG / avgAvg) * 90), 100),
-                Power: Math.min(Math.floor((player.SLG / avgSLG) * 90), 100),
-                Baserunning: Math.max(player.SB * 5, 1),
-                PlateDiscipline: Math.min((player.BB / player.PA) / avgBBRate * 90, 100),
-                Fielding: Math.max(Math.min((player.dWAR + 1) * 50, 100), 0)
+                Batting: Math.min(Math.floor((parseFloat(player.AVG) / avgAvg) * 50 + (parseFloat(player.SLG) / avgSLG) * 50), 100),
+                Power: Math.min(Math.floor((parseFloat(player.SLG) / avgSLG) * 50 + (parseFloat(player.HR) / avgHR) * 50), 100),
+                Baserunning: Math.min(Math.floor(speedScore * 10), 100),
+                PlateDiscipline: Math.min(Math.floor((parseFloat(player.OBP) / avgOBP) * 50 + ((parseFloat(player.BB) / parseFloat(player.PA)) / avgBBRate) * 50), 100),
+                Fielding: Math.max(Math.min((parseFloat(player.dWAR) + 1) * 50, 100), 0)
             };
         }
     
